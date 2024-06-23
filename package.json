@@ -6,6 +6,10 @@
   "engines": {
     "vscode": "^1.90.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/meftunca/beve-vscode"
+  },
   "categories": [
     "Language Packs",
     "Programming Languages",
@@ -14,7 +18,7 @@
   "activationEvents": [
     "onLanguage:beve"
   ],
-  "publisher": "beve",
+  "publisher": "devloops",
   "main": "./dist/extension.js",
   "contributes": {
     "languages": [
