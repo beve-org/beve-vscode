@@ -1,10 +1,10 @@
 {
     "comments": {
-        "lineComment": "#",
+        "lineComment": "#", // Varsayılan olarak yorum satırı için # karakterini kullanalım.
         "blockComment": [
             "/*",
             "*/"
-        ]
+        ] // Blok yorumlar için /* */ karakterlerini kullanalım.
     },
     "brackets": [
         [
@@ -56,5 +56,5 @@
             "\""
         ]
     ],
-    "wordPattern": "\\b[a-zA-Z0-9_]+\\b"
+    "wordPattern": "\\b[\\w\\-]+\\b"
 }

@@ -2,9 +2,9 @@
   "name": "beve",
   "displayName": "beve",
   "description": "Beve - JSON binary serializer for Visual Studio Code",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "engines": {
-    "vscode": "^1.90.0"
+    "vscode": "^1.17.0"
   },
   "license": "Apache-2.0",
   "repository": {
@@ -16,16 +16,12 @@
     "Programming Languages"
   ],
   "activationEvents": [
-    "onLanguage:beve"
+    "*"
   ],
   "publisher": "devloops",
   "main": "./dist/extension.js",
   "icon": "images/logo.png",
   "contributes": {
-    "icons": {
-      "light": "images/logo.png",
-      "dark": "images/logo.png"
-    },
     "languages": [
       {
         "id": "beve",
@@ -45,18 +41,59 @@
     "commands": [
       {
         "command": "beve.JSON_EDITOR",
-        "title": "Beve Dosyasını JSON Olarak Aç"
+        "title": "Beve Dosyasını JSON Olarak Aç",
+        "icon": {
+          "light": "./images/beve.png",
+          "dark": "./images/beve.png"
+        }
       },
       {
         "command": "beve.toJSON",
-        "title": "Beve Dosyasını JSON'a Dönüştür"
+        "title": "Beve Dosyasını JSON'a Dönüştür",
+        "icon": {
+          "light": "./images/beve.png",
+          "dark": "./images/beve.png"
+        }
       },
       {
         "command": "beve.fromJSON",
-        "title": "JSON Dosyasını Beve'ye Dönüştür"
+        "title": "JSON Dosyasını Beve'ye Dönüştür",
+        "icon": {
+          "light": "./images/beve.png",
+          "dark": "./images/beve.png"
+        }
       }
     ],
     "menus": {
+      "commandPalette": [
+        {
+          "when": "resourceLangId == beve",
+          "command": "beve.JSON_EDITOR"
+        },
+        {
+          "when": "resourceLangId == json",
+          "command": "beve.fromJSON"
+        },
+        {
+          "when": "resourceLangId == beve",
+          "command": "beve.toJSON"
+        },
+        {
+          "when": "resourceLangId == beve",
+          "command": "beve.JSON_EDITOR",
+          "group": "navigation"
+        },
+        {
+          "when": "resourceLangId == json",
+          "command": "beve.fromJSON",
+          "group": "navigation"
+        },
+        {
+          "when": "resourceLangId == beve",
+          "command": "beve.toJSON",
+          "group": "navigation"
+        }
+      ],
       "editor/context": [
         {
           "when": "resourceLangId == beve",

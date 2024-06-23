@@ -3,33 +3,105 @@ import * as vscode from 'vscode';
 import { readBeve, writeBeve } from './beve';
 class BeveTextDocumentContentProvider implements vscode.TextDocumentContentProvider {
 	async provideTextDocumentContent(uri: vscode.Uri): Promise<string> {
-		console.log('BEVE dosyası binary yerine .txt olarak okunuyor...');
 		try {
+			console.log('BEVE dosyası ayrıştırılıyor...', uri.fsPath);
 			const content = await vscode.workspace.fs.readFile(uri);
-			const jsonData = readBeve(content);
-			return JSON.stringify(jsonData, null, 2); // JSON'u metin olarak döndür
+
+			// Tagged binary formatındaki veriyi oku ve parse et
+			const parsedData = readBeve(content);
+
+			return JSON.stringify(parsedData, null, 2);
 		} catch (error) {
 			vscode.window.showErrorMessage('Beve dosyası ayrıştırılamadı.');
-			return '';
+			console.error('Beve dosyası ayrıştırılamadı.', error);
+			return 'Hata oluştu: ' + error; // Hata durumunda hata mesajını döndür
 		}
 	}
 }
+class BeveFileSystemProvider implements vscode.FileSystemProvider {
+
+	constructor() {
+		console.log('BEVE dosya sistemi sağlayıcısı oluşturuldu.');
+	}
+	private _emitter = new vscode.EventEmitter<vscode.FileChangeEvent[]>();
+	private _bufferedEvents: vscode.FileChangeEvent[] = [];
+	private _fireSoonHandle?: NodeJS.Timer;
+
+	readonly onDidChangeFile: vscode.Event<vscode.FileChangeEvent[]> = this._emitter.event;
+	// readDirectory, createDirectory, readFile, writeFile gibi metodları uygulamanız gerekecek.
+	// Bu metodlar, .beve dosyalarına erişim ve işlem yapma mantığını içerecektir.
+	async readFile(uri: vscode.Uri): Promise<Uint8Array> {
+		// .beve dosyasını binary olarak okuyun
+		return await vscode.workspace.fs.readFile(uri.with({ scheme: 'file' }));
+	}
+	async writeFile(uri: vscode.Uri, content: Uint8Array, options: { create: boolean, overwrite: boolean }): Promise<void> {
+		// .beve dosyasına binary olarak yazın
+		await vscode.workspace.fs.writeFile(uri.with({ scheme: 'file' }), content);
+	}
+	async readDirectory(uri: vscode.Uri): Promise<[string, vscode.FileType][]> {
+		// .beve dosyasının içeriğini listelemek için kullanılabilir
+		return [];
+	}
+	async createDirectory(uri: vscode.Uri): Promise<void> {
+		// .beve dosyası oluşturmak için kullanılabilir
+	}
+	async delete(uri: vscode.Uri, options: { recursive: boolean }): Promise<void> {
+		// .beve dosyasını silmek için kullanılabilir
+	}
+	async rename(oldUri: vscode.Uri, newUri: vscode.Uri, options: { overwrite: boolean }): Promise<void> {
+		// .beve dosyasını yeniden adlandırmak için kullanılabilir
+	}
+	async stat(uri: vscode.Uri): Promise<vscode.FileStat> {
+		// .beve dosyasının bilgilerini almak için kullanılabilir
+		return {
+			type: vscode.FileType.File,
+			ctime: 0,
+			mtime: 0,
+			size: 0
+		};
+	}
+
+	async copy?(source: vscode.Uri, destination: vscode.Uri, options: { overwrite: boolean }): Promise<void> {
+		// .beve dosyasını kopyalamak için kullanılabilir
+	}
+
+	watch(uri: vscode.Uri, options: { recursive: boolean, excludes: string[] }): vscode.Disposable {
+		// .beve dosyasını izlemek için kullanılabilir
+		return new vscode.Disposable(() => { });
+	}
+
+}
 export function activate(context: vscode.ExtensionContext) {
 	console.log('BEVE eklentisi başlatılıyor...');
-	const provider = new BeveTextDocumentContentProvider();
-	const registration = vscode.workspace.registerTextDocumentContentProvider('beve', provider);
-	context.subscriptions.push(registration);
-	console.log('BEVE eklentisi aktif!');
-	vscode.workspace.onDidOpenTextDocument(async (document) => {
-		if (document.languageId === 'beve' || document.fileName.endsWith('.beve')) {
-			console.log('BEVE dosyası açıldı!', document.languageId, document.fileName);
-			const watcher = await convertAndShowJson(document);
-			if (watcher) {
-				context.subscriptions.push(watcher);
-			}
+	const providerText = new BeveTextDocumentContentProvider();
+	const registrationText = vscode.workspace.registerTextDocumentContentProvider('beve', providerText);
+	context.subscriptions.push(registrationText);
+	const providerFS = new BeveFileSystemProvider();
+	const registrationFS = vscode.workspace.registerFileSystemProvider('beve', providerFS, {
+		isCaseSensitive: true // Beve dosya adlarının büyük/küçük harf duyarlı olduğunu belirtin
+	});
+	context.subscriptions.push(registrationFS);
 
+	vscode.workspace.onDidOpenTextDocument((document) => {
+		if (document.uri.scheme !== 'beve' && document.fileName.endsWith('.beve')) {
+			const jsonUri = document.uri.with({ scheme: 'beve' });
+			vscode.window.showTextDocument(jsonUri);
 		}
 	});
+	// const provider = new BeveTextDocumentContentProvider();
+	// const registration = vscode.workspace.registerTextDocumentContentProvider('beve', provider);
+	// context.subscriptions.push(registration);
+	// console.log('BEVE eklentisi aktif!');
+	// vscode.workspace.onDidOpenTextDocument(async (document) => {
+	// 	if (document.languageId === 'beve' || document.fileName.endsWith('.beve')) {
+	// 		console.log('BEVE dosyası açıldı!', document.languageId, document.fileName);
+	// 		const watcher = await convertAndShowJson(document);
+	// 		if (watcher) {
+	// 			context.subscriptions.push(watcher);
+	// 		}
+
+	// 	}
+	// });
 
 	// Komut için aynı işlevi kullan
 	vscode.commands.registerCommand('beve.JSON_EDITOR', async (uri?: vscode.Uri) => {
