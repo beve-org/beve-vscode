@@ -2,7 +2,7 @@
   "name": "beve",
   "displayName": "beve",
   "description": "Beve - JSON binary serializer for Visual Studio Code",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "engines": {
     "vscode": "^1.90.0"
   },
@@ -58,6 +58,18 @@
     ],
     "menus": {
       "editor/context": [
+        {
+          "when": "resourceLangId == beve",
+          "command": "beve.JSON_EDITOR"
+        },
+        {
+          "when": "resourceLangId == json",
+          "command": "beve.fromJSON"
+        },
+        {
+          "when": "resourceLangId == beve",
+          "command": "beve.toJSON"
+        },
         {
           "when": "resourceLangId == beve",
           "command": "beve.JSON_EDITOR",
