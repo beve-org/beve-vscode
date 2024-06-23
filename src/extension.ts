@@ -1,178 +1,108 @@
-// // The module 'vscode' contains the VS Code extensibility API
-// // Import the module and reference it with the alias vscode in your code below
-// import * as vscode from 'vscode';
-// import { CodeActionKind } from 'vscode';
-// import { read_beve, write_beve } from "./beve"
-// // This method is called when your extension is activated
-// // Your extension is activated the very first time the command is executed
 
-// export function activate(context: vscode.ExtensionContext) {
-
-// 	console.log('BEVE dosyası Yakalayıcı aktif!',);
-// 	// vscode.workspace.onDidOpenTextDocument(() => {
-// 	// 	console.log("onDidOpenTextDocument");
-// 	// });
-// 	vscode.workspace.onDidOpenNotebookDocument(() => {
-// 		console.log("onDidOpenNotebookDocument");
-// 	});
-// 	vscode.workspace.onDidOpenTextDocument(() => {
-// 		console.log("onDidOpenTextDocument");
-// 	});
-// 	vscode.workspace.onDidSaveTextDocument(() => {
-// 		console.log("onDidSaveTextDocument");
-// 	});
-
-// 	vscode.workspace.onDidCloseTextDocument(() => {
-// 		console.log("onDidCloseTextDocument");
-// 	});
-// 	vscode.window.showInformationMessage('BEVE dosyası Yakalayıcı aktif!');
-// 	const fep = vscode.languages.registerDocumentFormattingEditProvider('beve',
-// 		{
-// 			provideDocumentFormattingEdits(document: vscode.TextDocument): vscode.TextEdit[] {
-// 				console.log('BEVE dosyası formatlanıyor...');
-// 				const content = document.getText();
-// 				const formatted = write_beve(JSON.parse(content));
-// 				// uint8array to string
-// 				const formattedStr = new TextDecoder().decode(write_beve(JSON.parse(content)));
-// 				return [vscode.TextEdit.replace(new vscode.Range(0, 0, document.lineCount, 0), formattedStr)];
-// 			}
-// 		}
-// 	);
-// 	context.subscriptions.push(fep);
-// 	vscode.workspace.onDidOpenTextDocument(async (document) => {
-// 		console.log("onDidOpenTextDocument"); console.log('BEVE dosyası açıldı!');
-// 		if (document.fileName.endsWith('.beve')) {
-// 			try {
-// 				const content = await vscode.workspace.fs.readFile(document.uri);
-// 				const parsedData = read_beve(content);
-
-// 				const newDocument = await vscode.workspace.openTextDocument({
-// 					content: JSON.stringify(parsedData, null, 2),
-// 					language: 'json'
-// 				});
-// 				await vscode.window.showTextDocument(newDocument, vscode.ViewColumn.Beside);
-// 			} catch (error) {
-// 				if (error instanceof Error) { // Spesifik hata türünü kontrol etme
-// 					vscode.window.showErrorMessage(`BEVE ayrıştırma hatası: ${error.message}`);
-// 				} else {
-// 					vscode.window.showErrorMessage('Bilinmeyen bir hata oluştu.');
-// 				}
-// 			}
-// 		}
-// 	});
-// 	// beve parse command
-// 	let disposable = vscode.commands.registerCommand('beve.parse', async () => {
-// 		console.log('BEVE dosyası ayrıştırılıyor... (Komut ile)', context.subscriptions);
-// 		const activeEditor = vscode.window.activeTextEditor;
-// 		if (activeEditor) {
-// 			const document = activeEditor.document;
-// 			if (document.languageId === 'beve') {
-// 				try {
-// 					const content = await vscode.workspace.fs.readFile(document.uri);
-// 					const parsedData = read_beve(content);
-
-// 					const newDocument = await vscode.workspace.openTextDocument({
-// 						content: JSON.stringify(parsedData, null, 2),
-// 						language: 'json'
-// 					});
-// 					await vscode.window.showTextDocument(newDocument, vscode.ViewColumn.Beside);
-// 					vscode.window.showInformationMessage('BEVE dosyası ayrıştırıldı.');
-// 				} catch (error) {
-// 					if (error instanceof Error) {
-// 						vscode.window.showErrorMessage(`BEVE ayrıştırma hatası: ${error.message}`);
-// 					} else {
-// 						vscode.window.showErrorMessage('Bilinmeyen bir hata oluştu.');
-// 					}
-// 				}
-// 			}
-// 		} else {
-// 			vscode.window.showErrorMessage('Aktif bir dosya yok.');
-
-// 		}
-// 	});
-// 	context.subscriptions.push(disposable);
-
-// }
-
-// // export function activate(context: vscode.ExtensionContext) {
-// // 	console.log('Congratulations, your extension "beve" is now active!');
-// // 	setTimeout(() => {
-// // 		vscode.languages.registerCodeActionsProvider('beve', new BeveCodeActionProvider(), {
-// // 			providedCodeActionKinds: [vscode.CodeActionKind.QuickFix]
-// // 		});
-// // 	}, 5000);
-// // }
-
-// // class BeveCodeActionProvider implements vscode.CodeActionProvider {
-// // 	public async provideCodeActions(document: vscode.TextDocument, range: vscode.Range | vscode.Selection, context: vscode.CodeActionContext, token: vscode.CancellationToken): Promise<vscode.CodeAction[]> {
-// // 		if (document.languageId !== 'beve') {
-// // 			return []; // Sadece beve dosyaları için
-// // 		}
-// // 		console.log('BEVE dosyası ayrıştırılıyor... (QuickFix ile)', vscode.window.visibleTextEditors);
-// // 		const content = await vscode.workspace.fs.readFile(document.uri);
-
-// // 		try {
-// // 			const parsedData = read_beve(content);
-// // 			const action = new vscode.CodeAction('JSON olarak görüntüle', vscode.CodeActionKind.QuickFix);
-// // 			action.edit = new vscode.WorkspaceEdit();
-// // 			action.edit.createFile(
-// // 				vscode.Uri.file(document.uri.fsPath + '.json'),
-// // 				{ overwrite: true, ignoreIfExists: false }
-// // 			);
-// // 			action.edit.insert(
-// // 				vscode.Uri.file(document.uri.fsPath + '.json'),
-// // 				new vscode.Position(0, 0),
-// // 				JSON.stringify(parsedData, null, 2)
-// // 			);
-// // 			return [action];
-// // 		} catch (error) {
-// // 			if (error instanceof Error) {
-// // 				vscode.window.showErrorMessage(`BEVE ayrıştırma hatası: ${error.message}`);
-// // 			} else {
-// // 				vscode.window.showErrorMessage('Bilinmeyen bir hata oluştu.');
-// // 			}
-// // 			return [];
-// // 		}
-// // 	}
-// // }
-
-
-// // This method is called when your extension is deactivated
-// export function deactivate() { }
 import * as vscode from 'vscode';
 import { readBeve, writeBeve } from './beve';
-
+class BeveTextDocumentContentProvider implements vscode.TextDocumentContentProvider {
+	async provideTextDocumentContent(uri: vscode.Uri): Promise<string> {
+		console.log('BEVE dosyası binary yerine .txt olarak okunuyor...');
+		try {
+			const content = await vscode.workspace.fs.readFile(uri);
+			const jsonData = readBeve(content);
+			return JSON.stringify(jsonData, null, 2); // JSON'u metin olarak döndür
+		} catch (error) {
+			vscode.window.showErrorMessage('Beve dosyası ayrıştırılamadı.');
+			return '';
+		}
+	}
+}
 export function activate(context: vscode.ExtensionContext) {
+	console.log('BEVE eklentisi başlatılıyor...');
+	const provider = new BeveTextDocumentContentProvider();
+	const registration = vscode.workspace.registerTextDocumentContentProvider('beve', provider);
+	context.subscriptions.push(registration);
 	console.log('BEVE eklentisi aktif!');
 	vscode.workspace.onDidOpenTextDocument(async (document) => {
-		console.log('BEVE dosyası açıldı!', document.languageId, document.fileName);
 		if (document.languageId === 'beve' || document.fileName.endsWith('.beve')) {
-			await convertAndShowJson(document);
+			console.log('BEVE dosyası açıldı!', document.languageId, document.fileName);
+			const watcher = await convertAndShowJson(document);
+			if (watcher) {
+				context.subscriptions.push(watcher);
+			}
+
 		}
 	});
 
 	// Komut için aynı işlevi kullan
-	vscode.commands.registerCommand('beve.parse', async (uri?: vscode.Uri) => {
+	vscode.commands.registerCommand('beve.JSON_EDITOR', async (uri?: vscode.Uri) => {
 		const document = uri ? await vscode.workspace.openTextDocument(uri) : vscode.window.activeTextEditor?.document;
 		if (document && document.languageId === 'beve') {
+			console.log('BEVE dosyası ayrıştırılıyor...');
 			await convertAndShowJson(document);
 		} else {
 			vscode.window.showErrorMessage('Lütfen bir .beve dosyası seçin.');
 		}
 	});
+	vscode.commands.registerCommand('beve.toJSON', async (uri?: vscode.Uri) => {
+		const document = uri ? await vscode.workspace.openTextDocument(uri) : vscode.window.activeTextEditor?.document;
+		if (document && document.languageId === 'beve') {
+			try {
+				const content = await vscode.workspace.fs.readFile(document.uri);
+				const jsonData = readBeve(content);
+				// .beve dosyasını .json dosyasına dönüştür
+				const newFileName = document.uri.fsPath.replace('.beve', '.json');
+				const jsonUri = vscode.Uri.file(newFileName);
+				await vscode.workspace.fs.writeFile(jsonUri, Buffer.from(JSON.stringify(jsonData, null, 2)));
+				vscode.window.showInformationMessage('.json dosyası oluşturuldu.');
+			} catch (error) {
+				vscode.window.showErrorMessage('BEVE dosyası ayrıştırma hatası.');
+			}
+		}
+	});
+	vscode.commands.registerCommand('beve.fromJSON', async (uri?: vscode.Uri) => {
+		const document = uri ? await vscode.workspace.openTextDocument(uri) : vscode.window.activeTextEditor?.document;
+		if (document && document.languageId === 'beve') {
+			try {
+				const content = await vscode.workspace.fs.readFile(document.uri);
+				const jsonData = JSON.parse(content.toString());
+				// .json dosyasını .beve dosyasına dönüştür
+				const newFileName = document.uri.fsPath.replace('.json', '.beve');
+				const beveUri = vscode.Uri.file(newFileName);
+				await vscode.workspace.fs.writeFile(beveUri, writeBeve(jsonData));
+				vscode.window.showInformationMessage('.beve dosyası oluşturuldu.');
+			} catch (error) {
+				vscode.window.showErrorMessage('JSON geçersiz veya BEVE dönüştürme hatası.');
+			}
+		}
+	});
+
+
 }
 
 async function convertAndShowJson(document: vscode.TextDocument) {
 	try {
 		const content = await vscode.workspace.fs.readFile(document.uri);
 		const parsedData = readBeve(content);
+		// create preview document
 		console.log(parsedData);
+		// create temporary JSON document
+
+
+		// close beve tab
 		const jsonDocument = await vscode.workspace.openTextDocument({
 			content: JSON.stringify(parsedData, null, 2),
 			language: 'json'
 		});
+		await vscode.window.showTextDocument(jsonDocument, vscode.ViewColumn.Beside, true);
+		// handle onSave event
+		const watcher = vscode.workspace.onDidSaveTextDocument(async (savedDocument) => {
+			if (savedDocument === jsonDocument) {
+				const beveData = writeBeve(JSON.parse(savedDocument.getText()));
+				await vscode.workspace.fs.writeFile(document.uri, beveData);
+				vscode.window.showInformationMessage('.beve dosyası güncellendi.');
+			}
+		});
+		// dispose watcher when jsonDocument is closed
+		return watcher;
 
-		await vscode.window.showTextDocument(jsonDocument, vscode.ViewColumn.Beside);
 	} catch (error) {
 		console.log(error);
 		if (error instanceof Error) {
@@ -182,3 +112,4 @@ async function convertAndShowJson(document: vscode.TextDocument) {
 		}
 	}
 }
+

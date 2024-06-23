@@ -2,25 +2,30 @@
   "name": "beve",
   "displayName": "beve",
   "description": "Beve - JSON binary serializer for Visual Studio Code",
-  "version": "0.0.1",
+  "version": "0.0.5",
   "engines": {
     "vscode": "^1.90.0"
   },
+  "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/meftunca/beve-vscode"
   },
   "categories": [
     "Language Packs",
-    "Programming Languages",
-    "Formatters"
+    "Programming Languages"
   ],
   "activationEvents": [
     "onLanguage:beve"
   ],
   "publisher": "devloops",
   "main": "./dist/extension.js",
+  "icon": "images/logo.png",
   "contributes": {
+    "icons": {
+      "light": "images/logo.png",
+      "dark": "images/logo.png"
+    },
     "languages": [
       {
         "id": "beve",
@@ -30,25 +35,51 @@
         "extensions": [
           ".beve"
         ],
-        "configuration": "./language-configuration.json"
+        "configuration": "./language-configuration.json",
+        "icon": {
+          "light": "./images/beve.png",
+          "dark": "./images/beve.png"
+        }
       }
     ],
     "commands": [
       {
-        "command": "beve.convertToJSON",
+        "command": "beve.JSON_EDITOR",
         "title": "Beve Dosyasını JSON Olarak Aç"
+      },
+      {
+        "command": "beve.toJSON",
+        "title": "Beve Dosyasını JSON'a Dönüştür"
+      },
+      {
+        "command": "beve.fromJSON",
+        "title": "JSON Dosyasını Beve'ye Dönüştür"
       }
     ],
     "menus": {
       "editor/context": [
         {
           "when": "resourceLangId == beve",
-          "command": "beve.convertToJSON"
+          "command": "beve.JSON_EDITOR",
+          "group": "navigation"
+        },
+        {
+          "when": "resourceLangId == json",
+          "command": "beve.fromJSON",
+          "group": "navigation"
+        },
+        {
+          "when": "resourceLangId == beve",
+          "command": "beve.toJSON",
+          "group": "navigation"
         }
       ]
     }
   },
   "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": true
+    },
     "virtualWorkspaces": true,
     "workspace": {
       "files": {
