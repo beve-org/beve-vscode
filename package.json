@@ -4,7 +4,7 @@
   "description": "Beve - JSON binary serializer for Visual Studio Code",
   "version": "0.0.8",
   "engines": {
-    "vscode": "^1.17.0"
+    "vscode": "^1.90.0"
   },
   "license": "Apache-2.0",
   "repository": {
