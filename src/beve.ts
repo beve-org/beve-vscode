@@ -459,6 +459,10 @@ function write_value(writer: Writer, value: JSON) {
         writer.append_uint8(header);
         writeCompressed(writer, value.length);
         writer.append(value);
+    } else if (value === null) {
+        let header = 0;
+        header |= 0b00000000;
+        writer.append_uint8(header);
     } else if (typeof value === 'boolean') {
         let header = 0;
         if (value) {
@@ -497,6 +501,10 @@ function write_value(writer: Writer, value: JSON) {
         writer.append_uint8(header);
         writeCompressed(writer, Object.keys(value).length);
         for (const key in value) {
+            if (value[key] === undefined) {
+                continue;
+            }
+
             writeCompressed(writer, key.length);
             writer.append(key);
             write_value(writer, value[key]);

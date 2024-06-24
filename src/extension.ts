@@ -104,7 +104,7 @@ export function activate(context: vscode.ExtensionContext) {
 	// });
 
 	// Komut için aynı işlevi kullan
-	vscode.commands.registerCommand('beve.JSON_EDITOR', async (uri?: vscode.Uri) => {
+	const editorDis = vscode.commands.registerCommand('beve.JSON_EDITOR', async (uri?: vscode.Uri) => {
 		const document = uri ? await vscode.workspace.openTextDocument(uri) : vscode.window.activeTextEditor?.document;
 		if (document && document.languageId === 'beve') {
 			console.log('BEVE dosyası ayrıştırılıyor...');
@@ -113,39 +113,50 @@ export function activate(context: vscode.ExtensionContext) {
 			vscode.window.showErrorMessage('Lütfen bir .beve dosyası seçin.');
 		}
 	});
-	vscode.commands.registerCommand('beve.toJSON', async (uri?: vscode.Uri) => {
-		const document = uri ? await vscode.workspace.openTextDocument(uri) : vscode.window.activeTextEditor?.document;
-		if (document && document.languageId === 'beve') {
-			try {
-				const content = await vscode.workspace.fs.readFile(document.uri);
-				const jsonData = readBeve(content);
-				// .beve dosyasını .json dosyasına dönüştür
-				const newFileName = document.uri.fsPath.replace('.beve', '.json');
-				const jsonUri = vscode.Uri.file(newFileName);
-				await vscode.workspace.fs.writeFile(jsonUri, Buffer.from(JSON.stringify(jsonData, null, 2)));
-				vscode.window.showInformationMessage('.json dosyası oluşturuldu.');
-			} catch (error) {
-				vscode.window.showErrorMessage('BEVE dosyası ayrıştırma hatası.');
-			}
+	const toJSONDis = vscode.commands.registerCommand('beve.toJSON', async (uri?: vscode.Uri) => {
+		// open binary file
+		if (uri === undefined || uri.scheme !== 'file' || !uri.fsPath.endsWith('.beve')) {
+			vscode.window.showErrorMessage('Lütfen bir .beve dosyası seçin.');
+			return;
+		}
+		// @ts-ignore
+		console.log('BEVE JSON dosyasına dönüştürülüyor...');
+		try {
+			const content = await vscode.workspace.fs.readFile(uri);
+			const jsonData = readBeve(content);
+			// .beve dosyasını .json dosyasına dönüştür
+			const newFileName = uri.fsPath.replace('.beve', '.json');
+			const jsonUri = vscode.Uri.file(newFileName);
+			await vscode.workspace.fs.writeFile(jsonUri, Buffer.from(JSON.stringify(jsonData, null, 2)));
+			vscode.window.showInformationMessage(newFileName.split("/")[0] + ' dosyası oluşturuldu.');
+		} catch (error) {
+			vscode.window.showErrorMessage('BEVE dosyası ayrıştırma hatası.');
 		}
 	});
-	vscode.commands.registerCommand('beve.fromJSON', async (uri?: vscode.Uri) => {
-		const document = uri ? await vscode.workspace.openTextDocument(uri) : vscode.window.activeTextEditor?.document;
-		if (document && document.languageId === 'beve') {
-			try {
-				const content = await vscode.workspace.fs.readFile(document.uri);
-				const jsonData = JSON.parse(content.toString());
-				// .json dosyasını .beve dosyasına dönüştür
-				const newFileName = document.uri.fsPath.replace('.json', '.beve');
-				const beveUri = vscode.Uri.file(newFileName);
-				await vscode.workspace.fs.writeFile(beveUri, writeBeve(jsonData));
-				vscode.window.showInformationMessage('.beve dosyası oluşturuldu.');
-			} catch (error) {
-				vscode.window.showErrorMessage('JSON geçersiz veya BEVE dönüştürme hatası.');
-			}
+	const fromJSONDis = vscode.commands.registerCommand('beve.fromJSON', async (uri?: vscode.Uri) => {
+		if (uri === undefined || uri.scheme !== 'file' || !uri.fsPath.endsWith('.json')) {
+			vscode.window.showErrorMessage('Lütfen bir .json dosyası seçin.');
+			return;
+		}
+		try {
+			console.log("JSON dosyası .beve dosyasına dönüştürülüyor");
+			// @ts-ignore
+			const content = await vscode.workspace.fs.readFile(uri);
+			const jsonData = JSON.parse(content.toString()) as JSON;
+			// .json dosyasını .beve dosyasına dönüştür
+			const newFileName = uri.fsPath.replace('.json', '.beve');
+			const beveToJSONUri = vscode.Uri.file(newFileName);
+			console.log(beveToJSONUri.fsPath, jsonData);
+			const beveData = writeBeve(jsonData);
+			await vscode.workspace.fs.writeFile(beveToJSONUri, beveData);
+			vscode.window.showInformationMessage(newFileName.split("/")[0] + ' dosyası oluşturuldu.');
+		} catch (error) {
+			vscode.window.showErrorMessage('JSON geçersiz veya BEVE dönüştürme hatası.');
+			console.error(error);
 		}
 	});
 
+	context.subscriptions.push(editorDis, toJSONDis, fromJSONDis);
 
 }
 
