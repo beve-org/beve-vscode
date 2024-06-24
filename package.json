@@ -2,7 +2,7 @@
   "name": "beve",
   "displayName": "beve",
   "description": "Beve - JSON binary serializer for Visual Studio Code",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "engines": {
     "vscode": "^1.90.0"
   },
@@ -41,7 +41,7 @@
     "commands": [
       {
         "command": "beve.JSON_EDITOR",
-        "title": "Beve Dosyasını JSON Olarak Aç",
+        "title": "Beve editor(on JSON)",
         "icon": {
           "light": "./images/beve.png",
           "dark": "./images/beve.png"
@@ -49,7 +49,7 @@
       },
       {
         "command": "beve.toJSON",
-        "title": "Beve Dosyasını JSON'a Dönüştür",
+        "title": "Beve to JSON",
         "icon": {
           "light": "./images/beve.png",
           "dark": "./images/beve.png"
@@ -57,7 +57,7 @@
       },
       {
         "command": "beve.fromJSON",
-        "title": "JSON Dosyasını Beve'ye Dönüştür",
+        "title": "JSON to Beve",
         "icon": {
           "light": "./images/beve.png",
           "dark": "./images/beve.png"

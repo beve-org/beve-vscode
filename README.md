@@ -1,33 +1,37 @@
-# Beve Eklentisi
+# Beve Plugin
 
-Bu VS Code eklentisi, `.beve` dosyalarını JSON formatına dönüştürerek kolayca görüntüleyip düzenlemenizi sağlar.
+Beve - JSON Converter and Viewer for Visual Studio Code
 
-## Özellikler
+This plugin allows you to easily view and edit `.beve` files by converting them to JSON format. It also allows you to save data in JSON format by converting it back to `.beve` format.
 
-* `.beve` dosyalarını otomatik olarak JSON formatına dönüştürür.
-* JSON verisini düzenlemenize ve değişiklikleri geri `.beve` formatına kaydetmenize olanak tanır.
-* Hızlı Düzeltme (Code Action) ile kolay dönüştürme sağlar.
+## Features
 
-## Gereksinimler
+* **Automatic JSON Preview:** When you open `.beve` files, it automatically previews them in JSON format.
+* **JSON Editing:** You can modify and save the JSON preview.
+* **Convert Back to `.beve:`** You can easily convert the JSON you edited to.beve` format.
+* Right Click Menu Integration:** You can perform conversion operations by right clicking in the file explorer or editor.
+* **Command Palette Support:** You can also use conversion commands via the command palette.
 
-* Visual Studio Code 1.90 veya üzeri
+## Requirements
 
-## Kurulum
+* Visual Studio Code (1.90 or above)
 
-1. VS Code'da uzantılar sekmesine gidin.
-2. "Beve" araması yapın ve eklentiyi yükleyin.
+## Installation
 
-## Kullanım
+1. In VS Code, go to the extensions tab.
+2. Search for "Beve" and install the plugin.
 
-1. Bir `.beve` dosyası açın.
-2. Dosya otomatik olarak JSON formatına dönüştürülür ve yeni bir editörde açılır.
-3. JSON verisini düzenleyin ve kaydedin.
-4. Değişiklikler otomatik olarak `.beve` dosyasına kaydedilir.
 
-## Katkıda Bulunma
 
-Pull requestler kabul edilir. Büyük değişiklikler yapmadan önce lütfen bir issue açarak ne yapmak istediğinizi tartışın.
+## Usage* **Automatic Preview:** When you open a `.beve` file, it is automatically previewed in JSON format.
+**Manual Conversion:**
+    **Beve to JSON:**  Right click on the `.beve` file and select "Convert Beve File to JSON". Or open the command palette (`Ctrl+Shift+P` or `Cmd+Shift+P`) and run the "Convert Beve to JSON" command.
+    **JSON to Beve:** Right click on the `.json` file and select "Convert JSON to Beve". Or open the command palette and run the command "Convert JSON File to Beve".
 
-## Lisans
+## Known Issues
+
+* Very large `.beve` files may take some time to convert.* In some special cases, data in `.beve` format may not be fully converted to JSON.
+## Contributing
+Pull requests are accepted. Please open an issue to discuss what you want to do before making major changes.## License
 
 MIT
