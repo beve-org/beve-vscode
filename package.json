@@ -6,10 +6,13 @@
   "engines": {
     "vscode": "^1.90.0"
   },
-  "license": "Apache-2.0",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/meftunca/beve-vscode"
+  },
+  "bugs": {
+    "url": "https://github.com/meftunca/beve-vscode/issues"
   },
   "categories": [
     "Language Packs",
