@@ -3,6 +3,7 @@
 'use strict';
 
 const path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 //@ts-check
 /** @typedef {import('webpack').Configuration} WebpackConfig **/
@@ -40,6 +41,20 @@ const extensionConfig = {
       }
     ]
   },
+  plugins: [
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, 'rust/beve-wasm/pkg-node/beve_wasm_node.js'),
+          to: path.resolve(__dirname, 'dist/beve_wasm_node.js')
+        },
+        {
+          from: path.resolve(__dirname, 'rust/beve-wasm/pkg-node/beve_wasm_node_bg.wasm'),
+          to: path.resolve(__dirname, 'dist/beve_wasm_node_bg.wasm')
+        }
+      ]
+    })
+  ],
   devtool: 'nosources-source-map',
   infrastructureLogging: {
     level: "log", // enables logging required for problem matchers

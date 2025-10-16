@@ -3,3 +3,5 @@ dist
 node_modules
 .vscode-test/
 *.vsix
+rust/beve-wasm/pkg-node/
+rust/beve-wasm/target/

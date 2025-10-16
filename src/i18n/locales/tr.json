@@ -1,0 +1,18 @@
+{
+  "log.extensionStarting": "BEVE eklentisi başlatılıyor...",
+  "log.fsProviderCreated": "BEVE dosya sistemi sağlayıcısı oluşturuldu.",
+  "log.parsingBeve": "BEVE dosyası ayrıştırılıyor...",
+  "log.convertingBeveToJson": "BEVE dosyası JSON'a dönüştürülüyor...",
+  "log.parsedBeve": "BEVE dosyası ayrıştırıldı.",
+  "log.updatingFromPreview": "BEVE dosyası JSON önizlemesinden güncelleniyor...",
+  "error.selectBeveFile": "Lütfen bir .beve dosyası seçin.",
+  "error.selectJsonFile": "Lütfen bir .json dosyası seçin.",
+  "error.convertBeveToJson": "BEVE dosyası JSON'a dönüştürülemedi.",
+  "error.convertJsonToBeve": "JSON veya BEVE dosyası dönüştürülemedi.",
+  "error.parseBeve": "BEVE dosyası ayrıştırılamadı.",
+  "error.parseBeveWithReason": "BEVE ayrıştırma hatası: {0}",
+  "error.unknown": "Bilinmeyen bir hata oluştu.",
+  "info.fileCreated": "\"{0}\" oluşturuldu.",
+  "info.fileUpdated": "\"{0}\" güncellendi.",
+  "provider.errorMessage": "Bir hata oluştu: {0}"
+}
