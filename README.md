@@ -1,37 +1,48 @@
-# Beve Plugin
+# Beve VS Code Extension
 
-Beve - JSON Converter and Viewer for Visual Studio Code
-
-This plugin allows you to easily view and edit `.beve` files by converting them to JSON format. It also allows you to save data in JSON format by converting it back to `.beve` format.
+The Beve extension allows you to easily view and edit `.beve` files by converting them to JSON format. It also allows you to save data in JSON format by converting it back to `.beve` format. All conversions use the official Rust [**beve**](https://crates.io/crates/beve) crate.
 
 ## Features
 
-* **Automatic JSON Preview:** When you open `.beve` files, it automatically previews them in JSON format.
-* **JSON Editing:** You can modify and save the JSON preview.
-* **Convert Back to `.beve:`** You can easily convert the JSON you edited to.beve` format.
-* Right Click Menu Integration:** You can perform conversion operations by right clicking in the file explorer or editor.
-* **Command Palette Support:** You can also use conversion commands via the command palette.
+- Automatic JSON preview when opening `.beve` files.
+- Bi-directional conversion commands for `.beve` ⇄ `.json`.
+- Context menu actions in the editor and Explorer for quick conversions.
+- Command Palette entries (`Ctrl+Shift+P` / `Cmd+Shift+P`) for all conversion actions.
+- WebAssembly-powered conversions for reliable numeric, string, matrix, and typed-array support.
+- Built-in localization (English by default, with Turkish available and room for more locales).
 
 ## Requirements
 
-* Visual Studio Code (1.90 or above)
+- Visual Studio Code 1.90 or newer
 
-## Installation
+## Usage
 
-1. In VS Code, go to the extensions tab.
-2. Search for "Beve" and install the plugin.
+- **Automatic preview:** Open a `.beve` file to view its JSON representation instantly.
+- **Beve → JSON:** Right-click a `.beve` file and choose “Convert Beve to JSON”, or run the `Beve: Convert Beve to JSON` command from the Command Palette.
+- **JSON → Beve:** Right-click a `.json` file and choose “Convert JSON to Beve”, or run the `Beve: Convert JSON to Beve` command.
+- **In-place editing:** Edit the JSON output; saving the preview will persist changes back to the `.beve` source when you trigger the conversion command.
 
+## Localization
 
+Localization automatically follows your VS Code display language. English (`en`) is the default, with Turkish (`tr`) translations available today. To try another language, change the Display Language in VS Code (`Preferences: Configure Display Language`), and the extension will fall back to English when a translation is not yet provided. Contributions for additional languages are welcome.
 
-## Usage* **Automatic Preview:** When you open a `.beve` file, it is automatically previewed in JSON format.
-**Manual Conversion:**
-    **Beve to JSON:**  Right click on the `.beve` file and select "Convert Beve File to JSON". Or open the command palette (`Ctrl+Shift+P` or `Cmd+Shift+P`) and run the "Convert Beve to JSON" command.
-    **JSON to Beve:** Right click on the `.json` file and select "Convert JSON to Beve". Or open the command palette and run the command "Convert JSON File to Beve".
+## Development
 
-## Known Issues
+```bash
+npm install
+npm test
+```
 
-* Very large `.beve` files may take some time to convert.* In some special cases, data in `.beve` format may not be fully converted to JSON.
+The test suite builds the Rust WebAssembly package, compiles the TypeScript sources, and exercises the extension commands end to end.
+
+## Caveats
+
+- Very large `.beve` files may take a while to convert.
+
 ## Contributing
-Pull requests are accepted. Please open an issue to discuss what you want to do before making major changes.## License
+
+Pull requests are welcome. Please open an issue beforehand for major changes or new features so we can discuss the approach.
+
+## License
 
 MIT
