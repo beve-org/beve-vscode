@@ -1,0 +1,7 @@
+{
+  "extension.displayName": "Beve",
+  "extension.description": "Beve - JSON binary serializer for Visual Studio Code",
+  "command.jsonEditor.title": "Open BEVE in JSON editor",
+  "command.toJson.title": "Convert BEVE to JSON",
+  "command.fromJson.title": "Convert JSON to BEVE"
+}

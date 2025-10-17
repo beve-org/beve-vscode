@@ -1,0 +1,152 @@
+[
+  {
+    "ref": "/users",
+    "name": "users",
+    "description": "Users Collections",
+    "fields": [
+      {
+        "name": "id",
+        "type": 1,
+        "nullable": false,
+        "order": 0,
+        "primary_key": true,
+        "ref_table": null,
+        "ref_column": null,
+        "default_value": null,
+        "check": null,
+        "comment": null
+      },
+      {
+        "name": "email",
+        "type": 1,
+        "nullable": false,
+        "order": 1,
+        "primary_key": null,
+        "ref_table": null,
+        "ref_column": null,
+        "default_value": null,
+        "check": null,
+        "comment": null
+      },
+      {
+        "name": "password",
+        "type": 1,
+        "nullable": false,
+        "order": 2,
+        "primary_key": null,
+        "ref_table": null,
+        "ref_column": null,
+        "default_value": null,
+        "check": null,
+        "comment": null
+      },
+      {
+        "name": "city",
+        "type": 1,
+        "nullable": false,
+        "order": 3,
+        "primary_key": null,
+        "ref_table": null,
+        "ref_column": null,
+        "default_value": null,
+        "check": null,
+        "comment": null
+      },
+      {
+        "name": "streetAddress",
+        "type": 1,
+        "nullable": false,
+        "order": 4,
+        "primary_key": null,
+        "ref_table": null,
+        "ref_column": null,
+        "default_value": null,
+        "check": null,
+        "comment": null
+      }
+    ],
+    "primary_keys": [
+      0
+    ],
+    "unique_keys": null,
+    "indexed_fields": [
+      0
+    ],
+    "nested_childs": null
+  },
+  {
+    "ref": "/users",
+    "name": "users",
+    "description": "Users Collection",
+    "fields": [
+      {
+        "name": "id",
+        "type": 1,
+        "nullable": false,
+        "order": 0,
+        "primary_key": true,
+        "ref_table": null,
+        "ref_column": null,
+        "default_value": null,
+        "check": null,
+        "comment": null
+      },
+      {
+        "name": "email",
+        "type": 1,
+        "nullable": false,
+        "order": 1,
+        "primary_key": null,
+        "ref_table": null,
+        "ref_column": null,
+        "default_value": null,
+        "check": null,
+        "comment": null
+      },
+      {
+        "name": "password",
+        "type": 1,
+        "nullable": false,
+        "order": 2,
+        "primary_key": null,
+        "ref_table": null,
+        "ref_column": null,
+        "default_value": null,
+        "check": null,
+        "comment": null
+      },
+      {
+        "name": "city",
+        "type": 1,
+        "nullable": false,
+        "order": 3,
+        "primary_key": null,
+        "ref_table": null,
+        "ref_column": null,
+        "default_value": null,
+        "check": null,
+        "comment": null
+      },
+      {
+        "name": "streetAddress",
+        "type": 1,
+        "nullable": false,
+        "order": 4,
+        "primary_key": null,
+        "ref_table": null,
+        "ref_column": null,
+        "default_value": null,
+        "check": null,
+        "comment": null
+      }
+    ],
+    "primary_keys": [
+      0
+    ],
+    "unique_keys": null,
+    "indexed_fields": [
+      0
+    ],
+    "nested_childs": null
+  }
+]

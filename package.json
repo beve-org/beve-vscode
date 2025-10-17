@@ -1,7 +1,7 @@
 {
   "name": "beve",
-  "displayName": "beve",
-  "description": "Beve - JSON binary serializer for Visual Studio Code",
+  "displayName": "%extension.displayName%",
+  "description": "%extension.description%",
   "version": "0.1.3",
   "engines": {
     "vscode": "^1.90.0"
@@ -44,7 +44,7 @@
     "commands": [
       {
         "command": "beve.JSON_EDITOR",
-        "title": "Beve editor(on JSON)",
+        "title": "%command.jsonEditor.title%",
         "icon": {
           "light": "./images/beve.png",
           "dark": "./images/beve.png"
@@ -52,7 +52,7 @@
       },
       {
         "command": "beve.toJSON",
-        "title": "Beve to JSON",
+        "title": "%command.toJson.title%",
         "icon": {
           "light": "./images/beve.png",
           "dark": "./images/beve.png"
@@ -60,7 +60,7 @@
       },
       {
         "command": "beve.fromJSON",
-        "title": "JSON to Beve",
+        "title": "%command.fromJson.title%",
         "icon": {
           "light": "./images/beve.png",
           "dark": "./images/beve.png"
@@ -143,9 +143,13 @@
   },
   "scripts": {
     "vscode:prepublish": "npm run package",
+    "build:wasm": "wasm-pack build ./rust/beve-wasm --release --target nodejs --out-dir pkg-node --out-name beve_wasm_node",
+    "precompile": "npm run build:wasm",
     "compile": "webpack",
     "watch": "webpack --watch",
+    "prewatch": "npm run build:wasm",
     "package": "webpack --mode production --devtool hidden-source-map",
+    "prepackage": "npm run build:wasm",
     "compile-tests": "tsc -p . --outDir out",
     "watch-tests": "tsc -p . -w --outDir out",
     "pretest": "npm run compile-tests && npm run compile && npm run lint",
@@ -159,6 +163,7 @@
     "@types/node": "16.x",
     "@typescript-eslint/eslint-plugin": "^5.56.0",
     "@typescript-eslint/parser": "^5.56.0",
+    "copy-webpack-plugin": "^11.0.0",
     "eslint": "^8.36.0",
     "glob": "^8.1.0",
     "mocha": "^10.2.0",

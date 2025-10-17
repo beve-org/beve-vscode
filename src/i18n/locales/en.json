@@ -1,0 +1,18 @@
+{
+  "log.extensionStarting": "Starting BEVE extension...",
+  "log.fsProviderCreated": "BEVE file system provider created.",
+  "log.parsingBeve": "Parsing BEVE file...",
+  "log.convertingBeveToJson": "Converting BEVE file to JSON...",
+  "log.parsedBeve": "BEVE file parsed.",
+  "log.updatingFromPreview": "Updating BEVE file from JSON preview...",
+  "error.selectBeveFile": "Please select a .beve file.",
+  "error.selectJsonFile": "Please select a .json file.",
+  "error.convertBeveToJson": "The BEVE file could not be converted to JSON.",
+  "error.convertJsonToBeve": "The JSON or BEVE file could not be converted.",
+  "error.parseBeve": "The BEVE file could not be parsed.",
+  "error.parseBeveWithReason": "BEVE parsing error: {0}",
+  "error.unknown": "An unknown error occurred.",
+  "info.fileCreated": "\"{0}\" created.",
+  "info.fileUpdated": "\"{0}\" updated.",
+  "provider.errorMessage": "An error occurred: {0}"
+}
