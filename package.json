@@ -21,7 +21,7 @@
   "activationEvents": [
     "*"
   ],
-  "publisher": "OpenSauce",
+  "publisher": "devloops",
   "main": "./dist/extension.js",
   "icon": "images/logo.png",
   "contributes": {
