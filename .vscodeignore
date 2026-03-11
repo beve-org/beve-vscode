@@ -3,6 +3,9 @@
 out/**
 node_modules/**
 src/**
+rust/**
+.claude/**
+.github/**
 .gitignore
 .yarnrc
 webpack.config.js
