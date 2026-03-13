@@ -25,7 +25,7 @@ async function withTempDir(run: (tempDir: string) => Promise<void>): Promise<voi
 }
 
 async function ensureExtensionActivated(): Promise<BeveModule> {
-	const extension = vscode.extensions.getExtension('devloops.beve');
+	const extension = vscode.extensions.getExtension('beve-org.beve-vscode');
 	if (!extension) {
 		throw new Error('BEVE extension could not be found.');
 	}
