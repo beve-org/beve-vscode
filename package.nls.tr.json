@@ -1,6 +1,6 @@
 {
-  "extension.displayName": "BEVE",
-  "extension.description": "BEVE - Visual Studio Code için BEVE - JSON ikili serileştirici",
+  "extension.displayName": "BEVE Tools",
+  "extension.description": "BEVE Tools - Visual Studio Code için BEVE - JSON ikili serileştirici",
   "command.jsonEditor.title": "BEVE'yi JSON düzenleyicisinde aç",
   "command.toJson.title": "BEVE'yi JSON'a dönüştür",
   "command.fromJson.title": "JSON'u BEVE'ye dönüştür"

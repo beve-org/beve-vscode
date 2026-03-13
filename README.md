@@ -1,4 +1,4 @@
-# BEVE VS Code Extension
+# BEVE Tools for VS Code
 
 The BEVE extension allows you to easily view and edit `.beve` files by converting them to JSON format. It also allows you to save data in JSON format by converting it back to `.beve` format. All conversions use the official Rust [**beve**](https://crates.io/crates/beve) crate.
 
