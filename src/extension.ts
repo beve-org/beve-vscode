@@ -91,11 +91,33 @@ export function activate(context: vscode.ExtensionContext) {
 	});
 	context.subscriptions.push(registrationFS);
 
-	vscode.workspace.onDidOpenTextDocument(async (document) => {
-		if (document.fileName.endsWith('.beve')) {
-			await convertAndShowJson(document.uri);
+	const autoPreviewedDocuments = new Set<string>();
+	const maybePreviewBeveDocument = async (document: vscode.TextDocument): Promise<void> => {
+		if (document.uri.scheme !== 'file' || !document.fileName.endsWith('.beve')) {
+			return;
 		}
-	});
+
+		const documentKey = document.uri.toString();
+		if (autoPreviewedDocuments.has(documentKey)) {
+			return;
+		}
+
+		autoPreviewedDocuments.add(documentKey);
+		await convertAndShowJson(document.uri);
+	};
+
+	context.subscriptions.push(
+		vscode.workspace.onDidOpenTextDocument((document) => {
+			void maybePreviewBeveDocument(document);
+		}),
+		vscode.workspace.onDidCloseTextDocument((document) => {
+			autoPreviewedDocuments.delete(document.uri.toString());
+		})
+	);
+
+	for (const document of vscode.workspace.textDocuments) {
+		void maybePreviewBeveDocument(document);
+	}
 
 
 	// Komut için aynı işlevi kullan

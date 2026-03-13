@@ -19,7 +19,10 @@
     "Programming Languages"
   ],
   "activationEvents": [
-    "*"
+    "onLanguage:beve",
+    "onCommand:beve.JSON_EDITOR",
+    "onCommand:beve.toJSON",
+    "onCommand:beve.fromJSON"
   ],
   "publisher": "beve-org",
   "main": "./dist/extension.js",
