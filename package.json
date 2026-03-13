@@ -2,7 +2,7 @@
   "name": "beve-vscode",
   "displayName": "%extension.displayName%",
   "description": "%extension.description%",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "engines": {
     "vscode": "^1.90.0"
   },
@@ -116,17 +116,17 @@
       ],
       "explorer/context": [
         {
-          "when": "resourceLangId == beve",
+          "when": "!explorerResourceIsFolder && resourceExtname == .beve",
           "command": "beve.JSON_EDITOR",
           "group": "navigation"
         },
         {
-          "when": "resourceLangId == json",
+          "when": "!explorerResourceIsFolder && resourceExtname == .json",
           "command": "beve.fromJSON",
           "group": "navigation"
         },
         {
-          "when": "resourceLangId == beve",
+          "when": "!explorerResourceIsFolder && resourceExtname == .beve",
           "command": "beve.toJSON",
           "group": "navigation"
         }
